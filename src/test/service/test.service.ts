@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { TestEntity } from './enities/test.entity';
+import { TestEntity } from '../enities/test.entity';
 import { Repository } from 'typeorm';
-import { CreateTestDto } from './dto/create-test.dto';
-import { WhereTestDto } from './dto/where-test.dto';
-import { UpdateTestDto } from './dto/update-test.dto';
-import { QuestionsService } from './questions/questions.service';
+import { CreateTestDto } from '../dto/create-test.dto';
+import { WhereTestDto } from '../dto/where-test.dto';
+import { UpdateTestDto } from '../dto/update-test.dto';
+import { QuestionsService } from '../questions/questions.service';
 
 @Injectable()
 export class TestService {

@@ -1,6 +1,7 @@
 import { CompanyEntity } from "src/company/entities/company.entity";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { QuestionsEntity } from "../questions/entites/questions.entity";
+import { TestResultUserEntity } from "./test-result-user.entity";
 
 @Entity({name: 'test'})
 export class TestEntity extends BaseEntity {
@@ -18,4 +19,7 @@ export class TestEntity extends BaseEntity {
 
     @OneToMany( () => QuestionsEntity, (questions) => questions.test)
     questions: QuestionsEntity[]
+
+    @OneToMany(() => TestResultUserEntity, (testResultUser) => testResultUser.test)
+    testResultUser: TestResultUserEntity[]
 }

@@ -3,6 +3,7 @@ import { SessionEntity } from "src/auth/enities/session.entity";
 import { AccountRoleEnum } from "src/common/enums/account-role.enum";
 import { IconEntity } from "src/icon/enities/icon.entity";
 import { CompanyEntity } from "src/company/entities/company.entity";
+import { TestResultUserEntity } from "src/test/enities/test-result-user.entity";
 
 
 @Entity({name: 'users'})
@@ -42,6 +43,9 @@ export class UsersEntity extends BaseEntity {
     @ManyToOne(() => CompanyEntity, (company) => company.users)
     @JoinColumn({name: 'companyId'})
     company: CompanyEntity
+
+    @OneToMany(() => TestResultUserEntity, (testResultUser) => testResultUser.user,{onDelete: 'CASCADE'})
+    testsResultUser: TestResultUserEntity[]
 
     @Column({nullable: true})
     icon: string

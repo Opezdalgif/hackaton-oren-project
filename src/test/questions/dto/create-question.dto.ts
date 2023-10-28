@@ -9,6 +9,10 @@ export class CreateQuestionDto {
     @IsNumber()
     testId: number
 
+    @IsOptional()
+    @IsNumber()
+    testResultUserId?: number
+
     @IsArray()
     answer: CreateAnswerDto[]
 }

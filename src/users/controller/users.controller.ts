@@ -10,8 +10,9 @@ import { UsersService } from '../services/users.service';
 import { Roles } from 'src/common/decorators/roles.decorator';
 import { JwtPayload } from 'src/common/types/JwtPayload.types';
 import { AccountRoleEnum } from 'src/common/enums/account-role.enum';
-import { AddAchivmentDto } from '../dto/add-achivment.dto';
 import { RemoveAchivmentDto } from '../dto/remove-achivment.dto';
+import { AddRoleCompanyDto } from '../dto/add-rolesCompany.dto';
+import { AddHomeRolesDto } from '../dto/add-homeRoles.dto';
 
 
 @UseGuards(AccessTokenGuard)
@@ -22,7 +23,7 @@ export class UsersController {
         private userService: UsersService
     ){}
 
-    @Roles(AccountRoleEnum.Admin)
+    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative || AccountRoleEnum.AdminPortal)
     @Post('/create')
     create(@Body() dto: CreateUserDto) {
         return this.userService.create(dto)
@@ -67,4 +68,25 @@ export class UsersController {
     changePassword(@JwtPayloadParam() jwtPayload: JwtPayload, @Body() dto: UserChangePasswordDto) {
         return this.userService.changePassword({id: jwtPayload.userId}, dto)
     }
+
+    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.AdminPortal || AccountRoleEnum.companyRepresentative || AccountRoleEnum.HRMeneger)
+    @Post('addRoleCompany')
+    addRoleCompany(@Body() dto: AddRoleCompanyDto) {
+        return this.userService.addRoleCompany(dto.userId, dto.rolesCompanyId)
+    }
+
+    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.AdminPortal || AccountRoleEnum.companyRepresentative || AccountRoleEnum.HRMeneger)
+    @Post('removeRoleCompany')
+    removeRoleCompany(@Body() dto: AddRoleCompanyDto) {
+        return this.userService.removeRoleCompany(dto.userId)
+    }
+
+    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative)
+    @Post('addHomeRole') 
+    addHomeRole(@Body() dto: AddHomeRolesDto) {
+        return this.userService.addRole(dto.userId, dto.role)
+    }
+
+
+
 }

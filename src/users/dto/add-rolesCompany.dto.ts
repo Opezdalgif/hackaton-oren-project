@@ -1,9 +1,9 @@
 import { IsNumber } from "class-validator";
 
-export class AddAchivmentDto {
+export class AddRoleCompanyDto {
     @IsNumber()
-    userId: number
+    rolesCompanyId: number
 
     @IsNumber()
-    achivmentId: number
+    userId: number
 }

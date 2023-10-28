@@ -1,10 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
-import { TestService } from './test.service';
-import { CreateTestDto } from './dto/create-test.dto';
-import { WhereTestDto } from './dto/where-test.dto';
+import { TestService } from '../service/test.service';
+import { CreateTestDto } from '../dto/create-test.dto';
+import { WhereTestDto } from '../dto/where-test.dto';
 import { JwtPayloadParam } from 'src/common/decorators/jwt-payload.decorator';
 import { JwtPayload } from 'src/common/types/JwtPayload.types';
-import { UpdateTestDto } from './dto/update-test.dto';
+import { UpdateTestDto } from '../dto/update-test.dto';
 
 @Controller('test')
 export class TestController {

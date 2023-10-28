@@ -2,7 +2,8 @@ import {
     Injectable, 
     Logger,
     InternalServerErrorException,
-    BadRequestException
+    BadRequestException,
+    ForbiddenException
 
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -275,5 +276,24 @@ export class UsersService {
         }
     }
 
+    async addRole(userId: number, role: AccountRoleEnum) {
+
+        if(role === AccountRoleEnum.Admin) {
+            throw new ForbiddenException(`У вас нету доступа`)
+        }
+        const user = await this.getExists({id: userId})
+
+        if (AccountRoleEnum[role] !== undefined) {
+            user.role = role;
     
+            try {
+                await user.save();
+            } catch (e) {
+                this.logger.error(e);
+                throw new BadRequestException(`Ошибка в добавление главной роли пользователю`);
+            }
+        } else {
+            throw new BadRequestException(`Недопустимая роль пользователя`);
+        }
+    }
 }
