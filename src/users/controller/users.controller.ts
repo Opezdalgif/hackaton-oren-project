@@ -36,13 +36,13 @@ export class UsersController {
     }
 
     @Get('/:userId/getOne')
-    getOne(@Param('userId') userId: number){
+    getOne(@Param('userId') userId: number) {
         return this.userService.getExists({id: userId})
     }
     
     @Get('/getAll')
-    findAll() { 
-        return this.userService.findAll()
+    findAll(@JwtPayloadParam() jwtPayload: JwtPayload) { 
+        return this.userService.findAll(jwtPayload.сompanyId)
     }
 
     @Patch('/update')

@@ -82,8 +82,9 @@ export class UsersService {
      * 
      * @returns 
      */
-    async findAll(){
+    async findAll(companyId: number){
         return this.usersRepository.find({
+            where: {companyId: companyId},
             select: {
                 id: true,
                 firstName: true,
