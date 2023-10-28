@@ -27,7 +27,7 @@ export class UsersController {
     @Post('/create')
     create(@Body() dto: CreateUserDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
         // return this.userService.create(dto)
-        return this.userService.createUserByRepresentative(dto,jwtPayload.сompanyId)
+        return this.userService.createUserByRepresentative(dto,jwtPayload.companyId)
     }
 
     @Get('/get')
@@ -42,7 +42,7 @@ export class UsersController {
     
     @Get('/getAll')
     findAll(@JwtPayloadParam() jwtPayload: JwtPayload) { 
-        return this.userService.findAll(jwtPayload.сompanyId)
+        return this.userService.findAll(jwtPayload.companyId)
     }
 
     @Patch('/update')

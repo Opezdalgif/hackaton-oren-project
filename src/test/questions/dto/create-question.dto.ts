@@ -14,5 +14,5 @@ export class CreateQuestionDto {
     testResultUserId?: number
 
     @IsArray()
-    answer: CreateAnswerDto[]
+    answers: CreateAnswerDto[]
 }

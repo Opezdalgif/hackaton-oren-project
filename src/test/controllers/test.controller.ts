@@ -1,12 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards, UsePipes } from '@nestjs/common';
 import { TestService } from '../service/test.service';
 import { CreateTestDto } from '../dto/create-test.dto';
 import { WhereTestDto } from '../dto/where-test.dto';
 import { JwtPayloadParam } from 'src/common/decorators/jwt-payload.decorator';
 import { JwtPayload } from 'src/common/types/JwtPayload.types';
 import { UpdateTestDto } from '../dto/update-test.dto';
+import { ValidationPipe } from 'src/common/pipes/validation.pipe';
+import { AccessTokenGuard } from 'src/common/guards/accessToken.guard';
 
 @Controller('test')
+@UsePipes(ValidationPipe)
+@UseGuards(AccessTokenGuard)
 export class TestController {
     constructor(
         private readonly testService: TestService
@@ -14,7 +18,8 @@ export class TestController {
 
     @Post('create')
     create (@Body() dto: CreateTestDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
-        return this.testService.create(dto, jwtPayload.сompanyId)
+        console.log(jwtPayload.companyId)
+        return this.testService.create(dto, jwtPayload.companyId)
     }
 
     @Get('find')

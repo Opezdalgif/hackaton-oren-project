@@ -28,7 +28,7 @@ export class TestService {
             for(let i = 0; i < dto.questions.length; i++) {
                 await this.questionService.create({
                     question: dto.questions[i].question,
-                    answer: dto.questions[i].answer,
+                    answers: dto.questions[i].answers,
                     testId: test.id
                 })
             }
@@ -46,7 +46,10 @@ export class TestService {
                 name: true,
             },
             relations: {
-                company: true
+                company: true,
+                questions: {
+                    answer: true
+                }
             }
         })
 
@@ -64,7 +67,10 @@ export class TestService {
                 name: true,
             },
             relations: {
-                company: true
+                company: true,
+                questions: {
+                    answer: true
+                }
             }
         })
     }

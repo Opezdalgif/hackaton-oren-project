@@ -20,12 +20,13 @@ export class QuestionsService {
             testId: dto.testId
         })
 
+        
         try {
             await question.save()
-            for(let i = 0; i < dto.answer.length; i++) {
+            for(let i = 0; i < dto.answers.length; i++) {
                 await this.answerService.create({
-                    text: dto.answer[i].text,
-                    isCorrect: dto.answer[i].isCorrect,
+                    text: dto.answers[i].text,
+                    isCorrect: dto.answers[i].isCorrect,
                     questionId: question.id
                 })
             }

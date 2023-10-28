@@ -20,8 +20,8 @@ export class QuestionsEntity extends BaseEntity {
     @JoinColumn({name: 'testId'})
     test: TestEntity
 
-    @Column({nullable: false})
-    testResultUserId: number
+    @Column({nullable: true})
+    testResultUserId: number | null
     @ManyToOne(() => TestResultUserEntity, (testResultUser) => testResultUser.questions)
     testResultUser: TestResultUserEntity
 }

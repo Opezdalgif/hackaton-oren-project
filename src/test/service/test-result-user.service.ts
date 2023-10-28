@@ -25,7 +25,7 @@ export class TestResultUserService {
             for(let i = 0; i < dto.questions.length; i++) {
                 await this.questionService.create({
                    question: dto.questions[i].question,
-                   answer: dto.questions[i].answer,
+                   answers: dto.questions[i].answers,
                    testId: testResultUser.testId,
                    testResultUserId: testResultUser.id
                 })
