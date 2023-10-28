@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CreateTestDto } from './dto/create-test.dto';
 import { WhereTestDto } from './dto/where-test.dto';
 import { UpdateTestDto } from './dto/update-test.dto';
+import { QuestionsService } from './questions/questions.service';
 
 @Injectable()
 export class TestService {
@@ -12,7 +13,8 @@ export class TestService {
 
     constructor(
         @InjectRepository(TestEntity)
-        private readonly testRepository: Repository<TestEntity>
+        private readonly testRepository: Repository<TestEntity>,
+        private readonly questionService: QuestionsService
     ){}
 
     async create(dto: CreateTestDto, companyId: number) {
@@ -23,6 +25,13 @@ export class TestService {
 
         try {
             await test.save()
+            for(let i = 0; i < dto.questions.length; i++) {
+                await this.questionService.create({
+                    question: dto.questions[i].question,
+                    answer: dto.questions[i].answer,
+                    testId: test.id
+                })
+            }
         } catch(e) {
             this.logger.error(e)
             throw new BadRequestException(`Ошибка создания теста`)

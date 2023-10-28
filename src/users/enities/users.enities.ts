@@ -4,6 +4,7 @@ import { AccountRoleEnum } from "src/common/enums/account-role.enum";
 import { IconEntity } from "src/icon/enities/icon.entity";
 import { CompanyEntity } from "src/company/entities/company.entity";
 
+
 @Entity({name: 'users'})
 export class UsersEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
@@ -27,8 +28,11 @@ export class UsersEntity extends BaseEntity {
     @Column({nullable:true}) 
     pushToken: string; 
 
-    @Column({enum: AccountRoleEnum,nullable: false, default: AccountRoleEnum.User})
+    @Column({enum: AccountRoleEnum,nullable: false, default: AccountRoleEnum.companyRepresentative})
     role: AccountRoleEnum;
+
+    @Column({nullable: true})
+    roleCompany: string | null
 
     @OneToMany(() => SessionEntity, (session) => session.user,{onDelete: 'CASCADE'})
     sessions: SessionEntity[]; 

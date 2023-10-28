@@ -30,7 +30,8 @@ export class AccessTokenGuard extends AuthGuard('access-token') {
             phoneNumber: session.user.phoneNumber,
             sessionId: jwtPayload.sessionId,
             role: session.user.role,
-
+            companyId: session.user.company.id,
+            roleCompany: session.user.roleCompany
         };
 
         return true;

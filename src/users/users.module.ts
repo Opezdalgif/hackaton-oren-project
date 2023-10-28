@@ -8,6 +8,7 @@ import { UsersController } from './controller/users.controller';
 import { IconModule } from 'src/icon/icon.module';
 import { FilesModule } from 'src/files/files.module';
 import { CompanyEntity } from 'src/company/entities/company.entity';
+import { RolesCompanyModule } from 'src/company/roles-company/roles-company.module';
 
 
 @Global()
@@ -19,6 +20,7 @@ import { CompanyEntity } from 'src/company/entities/company.entity';
       CompanyEntity
     ]),
     FilesModule,
+    RolesCompanyModule
 ],
   controllers:[UsersController],
   providers: [UsersService], 

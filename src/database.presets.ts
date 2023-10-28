@@ -14,6 +14,8 @@ export const DatabasePresets = async (app: INestApplication) => {
 
     const adminAccountData: CreateUserDto = {
         phoneNumber: configService.getOrThrow('ADMIN_PHONE_NUMBER'),
+        firstName: configService.getOrThrow('ADMIN_FIRSTNAME'),
+        lastName: configService.getOrThrow('ADMIN_LASTNAME'),
         passwordHash: configService.getOrThrow('ADMIN_PASSWORD'),
         email: configService.getOrThrow('ADMIN_EMAIL'),
     };

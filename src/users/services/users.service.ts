@@ -19,6 +19,7 @@ import { UserChangePasswordDto } from '../dto/user-change-password.dto';
 import { compareArrayValues } from 'src/common/function/compareArrayHighestValues.function';
 import { IconService } from 'src/icon/icon.service';
 import { FilesService } from 'src/files/files.service';
+import { RolesCompanyService } from 'src/company/roles-company/roles-company.service';
 
 
 @Injectable()
@@ -29,7 +30,8 @@ export class UsersService {
     constructor(
         @InjectRepository(UsersEntity)
         private usersRepository: Repository<UsersEntity> ,
-        private readonly filesServices: FilesService
+        private readonly filesServices: FilesService,
+        private readonly rolesCompanyService: RolesCompanyService
     ){}
 
     /**
@@ -72,7 +74,7 @@ export class UsersService {
                 icon: true
             },
             relations: {
-                
+                company: true
             }
           });
     }
@@ -96,7 +98,7 @@ export class UsersService {
             },
             where: whereDto,
             relations: {
-               
+               company: true
             }
         })
     }
@@ -129,10 +131,12 @@ export class UsersService {
                 role: true,
                 email: true,
                 phoneNumber: true,
+                companyId: true,
                 icon: true
             }, 
             relations: {
-                
+                company: true,
+
             },
             where: whereDto,
         })
@@ -238,6 +242,36 @@ export class UsersService {
             throw new InternalServerErrorException(
                 'Ошибка проверки правильности пароля',
             );
+        }
+    }
+
+    async addRoleCompany(userId: number, rolesCompanyId: number) {
+        const user = await this.getExists({id: userId})
+        const rolesCompany = await this.rolesCompanyService.find({rolesCompanyId: rolesCompanyId})
+
+        user.roleCompany = rolesCompany.nameRole
+
+        try {
+            await user.save()
+        } catch(e) {
+            this.logger.error(e)
+            if(e instanceof BadRequestException) {
+                throw e
+            }
+            throw new BadRequestException(`Произошла ошибка в добавлении роли предприятия пользователю`)
+        }   
+    }
+
+    async removeRoleCompany(userId: number) {
+        const user = await this.getExists({id: userId})
+
+        user.roleCompany = null
+
+        try {
+            await user.save()
+        } catch(e) {
+            this.logger.error(e)
+            throw new BadRequestException(`Произошла ошибка в удалении роли предприятия пользователя`)
         }
     }
 

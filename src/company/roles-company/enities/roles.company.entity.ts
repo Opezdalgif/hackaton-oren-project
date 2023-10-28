@@ -1,21 +1,17 @@
 import { CompanyEntity } from "src/company/entities/company.entity";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { QuestionsEntity } from "../questions/entites/questions.entity";
 
-@Entity({name: 'test'})
-export class TestEntity extends BaseEntity {
+@Entity({name: 'roles-company'})
+export class RolesCompanyEntity extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number
 
     @Column({nullable: false})
-    name: string
+    nameRole: string
     
     @Column({nullable: false})
     companyId: number
-    @ManyToOne(() => CompanyEntity, (company) => company.test)
+    @ManyToOne(() => CompanyEntity, (company) => company.rolesCompany)
     @JoinColumn({name: 'companyId'})
     company: CompanyEntity
-
-    @OneToMany( () => QuestionsEntity, (questions) => questions.test)
-    questions: QuestionsEntity[]
 }

@@ -2,6 +2,7 @@ import { OccupationEntity } from "src/occupation/entity/occupation.entity";
 import { TestEntity } from "src/test/enities/test.entity";
 import { UsersEntity } from "src/users/enities/users.enities";
 import { BaseEntity, Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { RolesCompanyEntity } from "../roles-company/enities/roles.company.entity";
 
 @Entity({name: "company"})
 export class CompanyEntity extends BaseEntity {
@@ -22,4 +23,7 @@ export class CompanyEntity extends BaseEntity {
 
     @OneToMany(() => UsersEntity, (users) => users.company)
     users: UsersEntity[]
+    
+    @OneToMany(() => RolesCompanyEntity, (rolesCompany) => rolesCompany.company)
+    rolesCompany: RolesCompanyEntity[]
 }

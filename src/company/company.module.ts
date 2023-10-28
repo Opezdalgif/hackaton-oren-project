@@ -7,6 +7,7 @@ import { UsersEntity } from 'src/users/enities/users.enities';
 import { FilesModule } from 'src/files/files.module';
 import { UsersModule } from 'src/users/users.module';
 import { OccupationModule } from 'src/occupation/occupation.module';
+import { RolesCompanyModule } from './roles-company/roles-company.module';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { OccupationModule } from 'src/occupation/occupation.module';
     ]), 
     FilesModule,
     UsersModule,
-    OccupationModule
+    OccupationModule,
+    RolesCompanyModule
   ],
   controllers: [CompanyController],
   providers: [CompanyService]

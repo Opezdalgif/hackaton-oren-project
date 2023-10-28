@@ -50,6 +50,8 @@ export class AuthService {
 
         let user = await this.usersService.create({
             email: dto.email,
+            firstName: dto.firstName,
+            lastName: dto.lastName,
             passwordHash: dto.password,
             phoneNumber: dto.phoneNumber,
         });

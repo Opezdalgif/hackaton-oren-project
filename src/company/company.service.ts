@@ -22,6 +22,11 @@ export class CompanyService {
     ){}
 
     async create (dto: CreateCompanyDto, userId: number) {
+        const userAddCompany = await this.userService.find({id: userId})
+
+        if(userAddCompany.companyId) {
+            throw new BadRequestException(`У вас уже есть предприятие. Можно создать только одно предприятие`)
+        }
         const icon = await this.filesService.uploadFileBase64(
             dto.icon,
             'photo'
@@ -31,16 +36,13 @@ export class CompanyService {
             name: dto.name,
         })
 
-        
-        const userAddCompany = await this.userService.find({id: userId})
-        userAddCompany.companyId = company.id
-        
         try {
             if(icon) {
                 company.icon = icon.publicPath
                 await company.save()
             }
             await company.save()
+            userAddCompany.companyId = company.id
             await userAddCompany.save()
         } catch(e) {
             this.logger.error(e)
