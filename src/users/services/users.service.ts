@@ -39,7 +39,7 @@ export class UsersService {
      * @param dto
      * @returns
      */
-    async create(dto: CreateUserDto, roles: AccountRoleEnum = AccountRoleEnum.User) {
+    async create(dto: CreateUserDto, roles: AccountRoleEnum = AccountRoleEnum.companyRepresentative) {
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
         const user = await this.usersRepository.create({
             ...dto, 
