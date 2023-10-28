@@ -152,7 +152,8 @@ export class UsersService {
                 email: true,
                 phoneNumber: true,
                 companyId: true,
-                icon: true
+                icon: true,
+                roleCompany: true,
             }, 
             relations: {
                 company: true,

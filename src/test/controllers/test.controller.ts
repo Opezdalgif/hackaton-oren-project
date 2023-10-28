@@ -22,9 +22,9 @@ export class TestController {
         return this.testService.create(dto, jwtPayload.companyId)
     }
 
-    @Get('find')
-    find (@Query() dto: WhereTestDto) {
-        return this.testService.find(dto)
+    @Get('find/:testId')
+    find (@Param('testId') testId: number) {
+        return this.testService.find({id: testId})
     }
 
     @Get('findAll')
