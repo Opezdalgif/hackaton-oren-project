@@ -79,12 +79,10 @@ export class CompanyService {
             select: {
                 id: true,
                 name: true,
-                icon: true
             },
             relations: {
-                occupation: true,
-                test: true,
-                users: true
+                users: true,
+                test: true
             }
         })
     }

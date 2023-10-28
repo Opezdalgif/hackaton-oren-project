@@ -90,6 +90,7 @@ export class UsersService {
                 email: true,
                 phoneNumber: true,
                 role: true,
+                companyId: true,
                 icon: true
             },
             relations: {
