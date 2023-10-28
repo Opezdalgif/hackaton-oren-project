@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { CompanyModule } from './company/company.module';
 import { TestModule } from './test/test.module';
 import { OccupationModule } from './occupation/occupation.module';
+import { EducationModule } from './education/education.module';
+import { DocumentModule } from './document/document.module';
 
 
 @Module({
@@ -35,6 +37,8 @@ import { OccupationModule } from './occupation/occupation.module';
     CompanyModule,
     TestModule,
     OccupationModule,
+    EducationModule,
+    DocumentModule,
   ],
 })
 export class AppModule {}

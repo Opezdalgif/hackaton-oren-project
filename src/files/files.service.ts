@@ -19,6 +19,7 @@ export class FilesService {
         photo: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
         audio: ['wav', 'mp3'],
         video: ['mp4'],
+        document: ['doc', 'docx', 'pdf', 'xls', 'xlsm', 'xlsx', 'pptx','pptm','ppt'],
     };
 
     constructor(private readonly configService: ConfigService) {
@@ -31,7 +32,6 @@ export class FilesService {
         }
     }
 
-    
     uploadFileBase64(encodedFile: string, ...allowedTypes: string[]) {
         const data = encodedFile.split(';base64,');
         const extension = data[0].split('/').pop();

@@ -4,6 +4,7 @@ import { AccountRoleEnum } from "src/common/enums/account-role.enum";
 import { IconEntity } from "src/icon/enities/icon.entity";
 import { CompanyEntity } from "src/company/entities/company.entity";
 import { TestResultUserEntity } from "src/test/enities/test-result-user.entity";
+import { EducationEntity } from "src/education/enities/education.entity";
 
 
 @Entity({name: 'users'})
@@ -46,6 +47,9 @@ export class UsersEntity extends BaseEntity {
 
     @OneToMany(() => TestResultUserEntity, (testResultUser) => testResultUser.user,{onDelete: 'CASCADE'})
     testsResultUser: TestResultUserEntity[]
+
+    @OneToMany(() => EducationEntity, (education) => education.user)
+    educations: EducationEntity[]
 
     @Column({nullable: true})
     icon: string
