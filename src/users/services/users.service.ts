@@ -58,6 +58,25 @@ export class UsersService {
         return user;
         
     }
+
+    async createUserByRepresentative(dto: CreateUserDto, companyId: number, role: AccountRoleEnum = AccountRoleEnum.User) {
+        const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
+        const user = await this.usersRepository.create({
+            ...dto, 
+            passwordHash: passwordHash,
+            role: role,
+            companyId: companyId
+        })
+        
+        try {
+            await user.save();
+        } catch (err) {
+            this.logger.error(`Произошла ошибка ${err}`)
+            throw new InternalServerErrorException('Ошибка создания пользователя')
+        }
+
+        return user;
+    }
     /**
      * Получение всех пользователей
      * 

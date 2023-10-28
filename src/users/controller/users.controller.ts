@@ -23,10 +23,11 @@ export class UsersController {
         private userService: UsersService
     ){}
 
-    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative || AccountRoleEnum.AdminPortal)
+    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative)
     @Post('/create')
-    create(@Body() dto: CreateUserDto) {
-        return this.userService.create(dto)
+    create(@Body() dto: CreateUserDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
+        // return this.userService.create(dto)
+        return this.userService.createUserByRepresentative(dto,jwtPayload.сompanyId)
     }
 
     @Get('/get')
