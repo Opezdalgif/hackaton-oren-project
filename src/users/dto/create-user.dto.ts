@@ -1,4 +1,5 @@
-import { IsNotEmpty , IsString , IsEmail , Length, IsNumber, IsPhoneNumber} from "class-validator";
+import { IsNotEmpty , IsString , IsEmail , Length, IsNumber, IsPhoneNumber, IsEnum} from "class-validator";
+import { AccountRoleEnum } from "src/common/enums/account-role.enum";
 
 export class CreateUserDto {
 
@@ -11,7 +12,6 @@ export class CreateUserDto {
     readonly lastName: string;
 
     @IsNotEmpty({message: 'Поле должно быть заполнено'})
-    @IsPhoneNumber()
     readonly phoneNumber: string;
 
     @IsNotEmpty({message: 'Email должен быть заполнен'})
@@ -22,4 +22,7 @@ export class CreateUserDto {
     @IsString({message: 'Поле должно быть строкой'})
     @Length(8, 32 , {message: 'Должно быть от 8 до 32 символов'})
     readonly passwordHash: string;
+
+    @IsEnum(AccountRoleEnum)
+    role: AccountRoleEnum
 }

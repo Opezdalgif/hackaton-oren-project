@@ -23,7 +23,7 @@ export class UsersController {
         private userService: UsersService
     ){}
 
-    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative)
+    @Roles(AccountRoleEnum.Admin, AccountRoleEnum.companyRepresentative)
     @Post('/create')
     create(@Body() dto: CreateUserDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
         // return this.userService.create(dto)
@@ -70,19 +70,19 @@ export class UsersController {
         return this.userService.changePassword({id: jwtPayload.userId}, dto)
     }
 
-    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.AdminPortal || AccountRoleEnum.companyRepresentative || AccountRoleEnum.HRMeneger)
+    @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal ,AccountRoleEnum.companyRepresentative ,AccountRoleEnum.HRMeneger)
     @Post('addRoleCompany')
     addRoleCompany(@Body() dto: AddRoleCompanyDto) {
         return this.userService.addRoleCompany(dto.userId, dto.rolesCompanyId)
     }
 
-    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.AdminPortal || AccountRoleEnum.companyRepresentative || AccountRoleEnum.HRMeneger)
+    @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal ,AccountRoleEnum.companyRepresentative ,AccountRoleEnum.HRMeneger)
     @Post('removeRoleCompany')
     removeRoleCompany(@Body() dto: AddRoleCompanyDto) {
         return this.userService.removeRoleCompany(dto.userId)
     }
 
-    @Roles(AccountRoleEnum.Admin || AccountRoleEnum.companyRepresentative)
+    @Roles(AccountRoleEnum.Admin,AccountRoleEnum.companyRepresentative)
     @Post('addHomeRole') 
     addHomeRole(@Body() dto: AddHomeRolesDto) {
         return this.userService.addRole(dto.userId, dto.role)

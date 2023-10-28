@@ -18,6 +18,7 @@ export const DatabasePresets = async (app: INestApplication) => {
         lastName: configService.getOrThrow('ADMIN_LASTNAME'),
         passwordHash: configService.getOrThrow('ADMIN_PASSWORD'),
         email: configService.getOrThrow('ADMIN_EMAIL'),
+        role: AccountRoleEnum.Admin
     };
 
     if (
@@ -25,7 +26,7 @@ export const DatabasePresets = async (app: INestApplication) => {
             phoneNumber: adminAccountData.phoneNumber,
         }))
     ) {
-        await usersService.create(adminAccountData, AccountRoleEnum.Admin);
+        await usersService.create(adminAccountData);
         logger.log('Автоматическое создание аккаунта администратора успешно!');
         
     }

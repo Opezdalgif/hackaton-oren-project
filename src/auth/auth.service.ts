@@ -13,6 +13,7 @@ import { JwtPayload } from 'src/common/types/JwtPayload.types';
 import { SessionEntity } from './enities/session.entity';
 import { SessionUnavailableException } from 'src/common/exceptions/session-unavailable.exception';
 import { AuthSignUpDto } from './dto/auth-sign-up.dto';
+import { AccountRoleEnum } from 'src/common/enums/account-role.enum';
 
 @Injectable()
 export class AuthService {
@@ -54,6 +55,7 @@ export class AuthService {
             lastName: dto.lastName,
             passwordHash: dto.password,
             phoneNumber: dto.phoneNumber,
+            role: AccountRoleEnum.companyRepresentative
         });
 
         return this.getTokens(user)

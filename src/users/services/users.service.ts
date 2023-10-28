@@ -40,12 +40,11 @@ export class UsersService {
      * @param dto
      * @returns
      */
-    async create(dto: CreateUserDto, roles: AccountRoleEnum = AccountRoleEnum.companyRepresentative) {
+    async create(dto: CreateUserDto) {
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
         const user = await this.usersRepository.create({
             ...dto, 
-            passwordHash: passwordHash,
-            role: roles,
+            passwordHash: passwordHash
         })
         
         try {
@@ -59,12 +58,11 @@ export class UsersService {
         
     }
 
-    async createUserByRepresentative(dto: CreateUserDto, companyId: number, role: AccountRoleEnum = AccountRoleEnum.User) {
+    async createUserByRepresentative(dto: CreateUserDto, companyId: number) {
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
         const user = await this.usersRepository.create({
             ...dto, 
             passwordHash: passwordHash,
-            role: role,
             companyId: companyId
         })
         
