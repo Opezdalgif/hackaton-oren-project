@@ -54,7 +54,6 @@ export class UsersService {
         const user = await this.usersRepository.create({
             ...data, 
             passwordHash: passwordHash,
-            birthDate: date
         })
         
         try {
@@ -76,7 +75,6 @@ export class UsersService {
             ...data, 
             passwordHash: passwordHash,
             companyId: companyId,
-            birthDate: date
         })
         
         try {
