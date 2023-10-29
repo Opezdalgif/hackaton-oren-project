@@ -29,7 +29,7 @@ export class QuestionsService {
                     text: dto.answers[i].text,
                     isCorrect: dto.answers[i].isCorrect,
                     questionId: question.id,
-                    select: dto.answers[i].select
+                    select: dto.answers[i].select ? dto.answers[i].select : undefined
                 })
             }
         } catch(e) {

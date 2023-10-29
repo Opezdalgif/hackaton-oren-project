@@ -11,6 +11,7 @@ export class CreateAnswerDto {
     @IsNumber()
     questionId: number
 
+    @IsOptional()
     @IsBoolean()
-    select: boolean
+    select?: boolean
 }
