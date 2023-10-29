@@ -10,4 +10,7 @@ export class CreateAnswerDto {
     @IsOptional()
     @IsNumber()
     questionId: number
+
+    @IsBoolean()
+    select: boolean
 }

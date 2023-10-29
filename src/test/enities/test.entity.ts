@@ -14,7 +14,7 @@ export class TestEntity extends BaseEntity {
     
     @Column({nullable: false})
     created_at: Date;
-
+    
     @Column({nullable: false})
     companyId: number
     @ManyToOne(() => CompanyEntity, (company) => company.test)

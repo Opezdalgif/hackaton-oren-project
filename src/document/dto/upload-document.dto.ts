@@ -4,6 +4,6 @@ export class UploadDocumentDto {
     @IsString()
     documentBase64: string
 
-    @IsString()
+    @IsString() 
     name: string
 }

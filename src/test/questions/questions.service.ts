@@ -28,7 +28,8 @@ export class QuestionsService {
                 await this.answerService.create({
                     text: dto.answers[i].text,
                     isCorrect: dto.answers[i].isCorrect,
-                    questionId: question.id
+                    questionId: question.id,
+                    select: dto.answers[i].select
                 })
             }
         } catch(e) {
