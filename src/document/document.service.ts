@@ -1,10 +1,11 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DocumentEntity } from './enities/document.entity';
 import { Repository } from 'typeorm';
 import { FilesService } from 'src/files/files.service';
 import { CreateDocumentDto } from './dto/create-document.dto';
 import { url } from 'inspector';
+import { UploadDocumentDto } from './dto/upload-document.dto';
 
 @Injectable()
 export class DocumentService {
@@ -35,5 +36,43 @@ export class DocumentService {
             }
         }
         
+    }
+
+    async find(documentId: number) {
+        const document = await this.documentRepository.findOne({
+            where: {id: documentId}
+        })
+
+        if(!document) {
+            throw new NotFoundException(`Такого документа нету`)
+        }
+
+        return document
+    }
+
+    async update(dto: UploadDocumentDto, documentId: number) {
+        const document = await this.find(documentId)
+
+        for(let key in dto) {
+            document[key] = dto[key]
+        }
+
+        try {
+            await document.save()
+        } catch(e) {
+            this.logger.error(e)
+            throw new BadRequestException(`Ошибка обновления документа`)
+        }
+    }
+
+    async remove(documentId: number) {
+        const document = await this.find(documentId)
+
+        try {
+            await document.remove()
+        } catch(e) {
+            this.logger.error(e)
+            throw new BadRequestException(`Ошибка удаления документа`)
+        }
     }
 }
