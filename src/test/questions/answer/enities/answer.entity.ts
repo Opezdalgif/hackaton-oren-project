@@ -12,7 +12,7 @@ export class AnswerEntity extends BaseEntity {
     @Column({nullable: false})
     isCorrect: boolean
 
-    @Column({nullable: true, default: true})
+    @Column({nullable: true, default: false})
     select: boolean | null
 
     @Column({nullable: false})
