@@ -154,7 +154,7 @@ export class TestService {
             throw new NotFoundException(`Такого пройденного теста у пользователя нету`)
         }
 
-        return
+        return test
     }
 
     async HomeRoleFind(testId: number, companyId: number, userId?: number) {
