@@ -17,12 +17,13 @@ export class QuestionsService {
     async create(dto: CreateQuestionDto) {
         const question = await this.questionsRepository.create({
             question: dto.question,
-            testId: dto.testId
+            testId: dto.testId ?  dto.testId : undefined,
+            testResultUserId: dto.testResultUserId ? dto.testResultUserId : undefined
         })
-
         
         try {
             await question.save()
+            
             for(let i = 0; i < dto.answers.length; i++) {
                 await this.answerService.create({
                     text: dto.answers[i].text,

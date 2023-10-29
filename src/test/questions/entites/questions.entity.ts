@@ -14,8 +14,8 @@ export class QuestionsEntity extends BaseEntity {
     @OneToMany(() => AnswerEntity, (answer) => answer.question, {onDelete:'CASCADE', onUpdate:'CASCADE'})
     answer: AnswerEntity[]
 
-    @Column({nullable: false})
-    testId: number
+    @Column({nullable: true})
+    testId: number | null
     @ManyToOne(() => TestEntity, (test) => test.questions,{onDelete:'CASCADE', onUpdate:'CASCADE'})
     @JoinColumn({name: 'testId'})
     test: TestEntity

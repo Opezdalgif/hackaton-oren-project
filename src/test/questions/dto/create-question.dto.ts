@@ -7,7 +7,7 @@ export class CreateQuestionDto {
 
     @IsOptional() 
     @IsNumber()
-    testId: number
+    testId?: number
 
     @IsOptional()
     @IsNumber()
