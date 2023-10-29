@@ -1,4 +1,4 @@
-import { IsArray, IsString } from "class-validator";
+import { IsArray, IsNumber, IsString } from "class-validator";
 import { CreateQuestionDto } from "../questions/dto/create-question.dto";
 
 export class CreateTestDto {
@@ -7,4 +7,7 @@ export class CreateTestDto {
 
     @IsArray()
     questions: CreateQuestionDto[]
+
+    @IsNumber() 
+    roleCompanyId: number
 }

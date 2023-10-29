@@ -18,7 +18,8 @@ export class TestResultUserService {
         const testResultUser = await this.testResutlUserRepository.create({
             testId: dto.testId,
             userId: userId,   
-        })
+            created_at: new Date()
+        })  
 
         try {
             await testResultUser.save()

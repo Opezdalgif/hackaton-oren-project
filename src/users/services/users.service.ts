@@ -273,7 +273,7 @@ export class UsersService {
 
     async addRoleCompany(userId: number, rolesCompanyId: number) {
         const user = await this.getExists({id: userId})
-        const rolesCompany = await this.rolesCompanyService.find({rolesCompanyId: rolesCompanyId})
+        const rolesCompany = await this.rolesCompanyService.find({id: rolesCompanyId})
 
         user.roleCompany = rolesCompany.nameRole
 

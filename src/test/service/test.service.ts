@@ -20,7 +20,9 @@ export class TestService {
     async create(dto: CreateTestDto, companyId: number) {
         const test = await this.testRepository.create({
             name: dto.name,
-            companyId: companyId
+            companyId: companyId,
+            created_at: new Date(),
+            roleCompanyId: dto.roleCompanyId 
         })
 
         try {
@@ -60,8 +62,9 @@ export class TestService {
         return test
     }
 
-    async findAll() {
+    async findAll(dto: WhereTestDto) {
         return this.testRepository.find({
+            where: dto,
             select: {
                 id: true,
                 name: true,
@@ -77,7 +80,7 @@ export class TestService {
 
     async update(testId: number, dto: UpdateTestDto) {
         try {
-            const test = await this.find({testId: testId})
+            const test = await this.find({id: testId})
 
             for(let key in dto) {
                 test[key] = dto[key]
@@ -92,7 +95,7 @@ export class TestService {
     }
 
     async remove (testId: number) {
-        const test = await this.find({testId: testId})
+        const test = await this.find({id: testId})
 
         try {
             await test.remove()

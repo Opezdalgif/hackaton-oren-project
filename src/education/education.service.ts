@@ -1,8 +1,9 @@
-import { BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { BadGatewayException, BadRequestException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EducationEntity } from './enities/education.entity';
 import { Repository } from 'typeorm';
 import { CreateEducationDto } from './enities/dto/create-education.dto';
+import { UpdateEdicationDto } from './enities/dto/update-education.dto';
 
 @Injectable()
 export class EducationService {
@@ -46,7 +47,7 @@ export class EducationService {
         return education
     }
 
-    async findAll() {
+    async findAll(companyId: number) {
         return this.educationRepository.find({
             relations: {
                 user: true,
@@ -54,5 +55,31 @@ export class EducationService {
                 documents: true
            }
         })
+    }
+
+    async update(dto: UpdateEdicationDto, educationId: number) {
+        const education = await this.find(educationId)
+
+        for(let key in dto) {
+            education[key] = dto[key]
+        }
+
+        try {
+            await education.save()
+        } catch(e) {
+            this.logger.error(e)
+            throw new BadRequestException(`Ошибка обновления учебного материала`)
+        }
+    }
+
+    async remove(educationId: number) {
+        const education = await this.find(educationId)
+
+        try {
+            await education.save()
+        } catch(e) {
+            this.logger.error(e)
+            throw new BadGatewayException(`Произошла ошбика в удалении обучения`)
+        }
     }
 }

@@ -1,9 +1,12 @@
-import { IsNumber } from "class-validator";
+import { IsNumber, IsOptional } from "class-validator";
 
 export class WhereRolesCompanyDto {
-    @IsNumber()
-    rolesCompanyId?: number
+    @IsOptional()
+    id?: number
 
-    @IsNumber()
+    @IsOptional()
     companyId?: number
+
+    @IsOptional()
+    nameRole?: string
 }

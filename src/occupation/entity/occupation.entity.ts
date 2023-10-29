@@ -1,5 +1,5 @@
 import { CompanyEntity } from "src/company/entities/company.entity";
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: "occupation"})
 export class OccupationEntity extends BaseEntity {
@@ -10,5 +10,16 @@ export class OccupationEntity extends BaseEntity {
     name: string
 
     @ManyToMany(() => CompanyEntity, (company) => company.occupation)
+    @JoinTable({
+        name: 'сompany_occupations',
+        joinColumn: {
+            name: 'companyId', 
+            referencedColumnName: 'id', 
+        },
+        inverseJoinColumn: {
+            name: 'occupationId', 
+            referencedColumnName: 'id', 
+        },
+    })
     company: CompanyEntity[]
 }

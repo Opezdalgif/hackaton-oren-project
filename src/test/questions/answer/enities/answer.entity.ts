@@ -14,7 +14,7 @@ export class AnswerEntity extends BaseEntity {
 
     @Column({nullable: false})
     questionId: number
-    @ManyToOne(() => QuestionsEntity, (question) => question.answer)
+    @ManyToOne(() => QuestionsEntity, (question) => question.answer,{onDelete:'CASCADE', onUpdate:'CASCADE'})
     @JoinColumn({name: 'questionId'})
     question: QuestionsEntity
 }

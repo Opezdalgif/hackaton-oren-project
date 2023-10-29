@@ -11,12 +11,12 @@ export class QuestionsEntity extends BaseEntity {
     @Column({nullable: false})
     question: string
 
-    @OneToMany(() => AnswerEntity, (answer) => answer.question)
+    @OneToMany(() => AnswerEntity, (answer) => answer.question, {onDelete:'CASCADE', onUpdate:'CASCADE'})
     answer: AnswerEntity[]
 
     @Column({nullable: false})
     testId: number
-    @ManyToOne(() => TestEntity, (test) => test.questions)
+    @ManyToOne(() => TestEntity, (test) => test.questions,{onDelete:'CASCADE', onUpdate:'CASCADE'})
     @JoinColumn({name: 'testId'})
     test: TestEntity
 

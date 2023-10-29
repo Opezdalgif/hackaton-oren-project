@@ -16,6 +16,10 @@ export class RolesCompanyService {
     ) {}
 
     async create (dto: CreateRolesCompanyDto, companyId: number) {
+        const verifyRoleCompany = await this.find({companyId: companyId, nameRole: dto.nameRole}) 
+        if(verifyRoleCompany) {
+            throw new BadRequestException(`Данная профессия уже создана`)
+        }
         const roleCompany = await this.rolesCompanyRepository.create({
             nameRole: dto.nameRole,
             companyId: companyId
@@ -36,13 +40,14 @@ export class RolesCompanyService {
             where: dto,
             select: {
                 id: true,
-                nameRole: true
+                nameRole: true,
+                companyId: true
             },
             relations: {
                 company: true
             }
         })
-
+ 
         if(!roleCompany) {
             throw new NotFoundException(`Такой роли не существует или ранее была удалена`)
         }
@@ -68,7 +73,7 @@ export class RolesCompanyService {
     }
 
     async update(dto: UpdateRolesCompanyDto, rolesCompanyId: number) {
-        const roleCompany = await this.find({rolesCompanyId: rolesCompanyId})
+        const roleCompany = await this.find({id: rolesCompanyId})
 
         for(let key in dto) {
             roleCompany[key] = dto[key]
@@ -83,7 +88,7 @@ export class RolesCompanyService {
     }
 
     async remove(rolesCompanyId: number) {
-        const roleCompany = await this.find({rolesCompanyId: rolesCompanyId})
+        const roleCompany = await this.find({id: rolesCompanyId})
 
         try {
             await roleCompany.remove()

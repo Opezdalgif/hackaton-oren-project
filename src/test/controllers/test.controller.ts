@@ -28,8 +28,8 @@ export class TestController {
     }
 
     @Get('findAll')
-    findAll () {
-        return this.testService.findAll()
+    findAll (@Query() dto: WhereTestDto) {
+        return this.testService.findAll(dto)
     }
 
     @Patch('update/:testId')

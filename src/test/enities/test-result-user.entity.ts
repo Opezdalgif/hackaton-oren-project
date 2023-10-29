@@ -9,6 +9,9 @@ export class TestResultUserEntity extends BaseEntity {
     id: number
 
     @Column({nullable: false})
+    created_at: Date
+
+    @Column({nullable: false})
     testId: number
     @ManyToOne(() => TestEntity, (test) => test.testResultUser)
     @JoinColumn({name: 'testId'})

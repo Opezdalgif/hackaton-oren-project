@@ -25,7 +25,7 @@ export class EducationController {
     }
 
     @Get('findAll')
-    findAll() {
-        return this.educationService.findAll()
+    findAll(@JwtPayloadParam() jwtPayload: JwtPayload) {
+        return this.educationService.findAll(jwtPayload.companyId)
     }
 }
