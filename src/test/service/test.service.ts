@@ -78,7 +78,7 @@ export class TestService {
         })
         
         test.testResultUser = array
-        
+
         return test
     }
 
@@ -128,11 +128,14 @@ export class TestService {
         return arrayTest
     }
 
-    async HomeRoleFind(testId: number, companyId: number) {
+    async HomeRoleFind(testId: number, companyId: number, userId?: number) {
             const test = await this.testRepository.findOne({
                 where: {
                     id: testId,
                     companyId: companyId,
+                    testResultUser: {
+                        userId: userId ? userId : undefined
+                    }
                 },
                 select: {
                     id: true,

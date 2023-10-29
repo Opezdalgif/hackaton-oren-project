@@ -36,8 +36,8 @@ export class TestController {
 
     @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal, AccountRoleEnum.HRMeneger, AccountRoleEnum.companyRepresentative)
     @Get('findHomeRole/:testId')
-    findHomeRole (@Param('testId') testId: number, @JwtPayloadParam() jwtPayload: JwtPayload) {
-        return this.testService.HomeRoleFind(testId, jwtPayload.companyId)
+    findHomeRole (@Param('testId') testId: number, @JwtPayloadParam() jwtPayload: JwtPayload, @Query() userId: number) {
+        return this.testService.HomeRoleFind(testId, jwtPayload.companyId, userId)
     }
 
     @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal, AccountRoleEnum.HRMeneger, AccountRoleEnum.companyRepresentative)
