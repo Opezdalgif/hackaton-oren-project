@@ -26,12 +26,12 @@ export class TestController {
 
     @Get('find/:testId')
     find (@Param('testId') testId: number, @JwtPayloadParam() jwtPayload: JwtPayload) {
-        return this.testService.find(testId, jwtPayload.companyId, jwtPayload.roleCompany)
+        return this.testService.find(testId, jwtPayload.companyId, jwtPayload.roleCompany, jwtPayload.userId)
     }
 
     @Get('findAll')
     findAll (@JwtPayloadParam() jwtPayload: JwtPayload) {
-        return this.testService.findAll(jwtPayload.companyId, jwtPayload.roleCompany)
+        return this.testService.findAll(jwtPayload.companyId, jwtPayload.roleCompany, jwtPayload.userId)
     }
 
     @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal, AccountRoleEnum.HRMeneger, AccountRoleEnum.companyRepresentative)

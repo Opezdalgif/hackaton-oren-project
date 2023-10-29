@@ -40,14 +40,14 @@ export class TestService {
         }
     }
 
-    async find(testId: number, companyId: number, roleCompany: string) {
+    async find(testId: number, companyId: number, roleCompany?: string, userId?: number) {
         const test = await this.testRepository.findOne({
             where: {
                 id: testId,
                 companyId: companyId,
                 roleCompany : {
                     nameRole: roleCompany
-                }
+                },
             },
             select: {
                 id: true,
@@ -70,16 +70,25 @@ export class TestService {
             throw new NotFoundException(`Данный тест не найден или ранее был удален`)
         }
 
+        let array = []
+        test.testResultUser.map(test =>  {
+            if(test.userId == userId) {
+                array.push(test)            
+            }
+        })
+        
+        test.testResultUser = array
+        
         return test
     }
 
-    async findAll(companyId: number, rolesCompany: string) {
-        return this.testRepository.find({
+    async findAll(companyId: number, rolesCompany?: string, userId?: number) {
+        const test = await  this.testRepository.find({
             where: {
                 companyId: companyId,
                 roleCompany: {
                     nameRole: rolesCompany
-                }
+                },
             },
             select: {
                 id: true,
@@ -97,6 +106,26 @@ export class TestService {
                 }
             }
         })
+
+        let arrayTestResult = []
+        let arrayTest = []
+        test.map(test => {
+            test.testResultUser.map(testResult => {
+                if(testResult.userId == userId) {
+                    arrayTestResult.push(testResult)           
+                }
+            })
+        })
+
+        test.map(test => {
+            if(arrayTestResult.length > 0) {
+                test.testResultUser = arrayTestResult
+                arrayTest.push(test)
+            }
+            
+        })
+
+        return arrayTest
     }
 
     async HomeRoleFind(testId: number, companyId: number) {
@@ -153,9 +182,9 @@ export class TestService {
         })
     }
 
-    async update(testId: number, dto: UpdateTestDto, companyId: number, rolesCompany: string) {
+    async update(testId: number, dto: UpdateTestDto, companyId: number, rolesCompany: string, ) {
         try {
-            const test = await this.find(testId, companyId, rolesCompany)
+            const test = await this.find(testId, companyId)
 
             for(let key in dto) {
                 test[key] = dto[key]
@@ -170,7 +199,7 @@ export class TestService {
     }
 
     async remove (testId: number, companyId: number, rolesCompany: string) {
-        const test = await this.find(testId,companyId, rolesCompany)
+        const test = await this.find(testId,companyId)
 
         try {
             await test.remove()
