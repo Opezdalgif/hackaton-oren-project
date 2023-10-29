@@ -41,9 +41,15 @@ export class UsersService {
      * @returns
      */
     async create(dto: CreateUserDto) {
+
+        console.log(dto.bithDate);
+        
+
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
         const {bithDate, ...data} = dto
+        // console.log(bithDate);
         const date = new Date(bithDate).toISOString()
+        // console.log(date);
 
         const user = await this.usersRepository.create({
             ...data, 
@@ -206,7 +212,7 @@ export class UsersService {
             if (dto.icon) {
                 const uploadedImage = await this.filesServices.uploadFileBase64(
                     dto.icon,
-                    undefined,
+                    undefined, undefined,
                     'photo',
                 );
                 
