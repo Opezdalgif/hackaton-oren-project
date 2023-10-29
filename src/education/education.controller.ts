@@ -17,7 +17,7 @@ export class EducationController {
         private readonly educationService: EducationService
     ){}
 
-    @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal, AccountRoleEnum.HRMeneger, AccountRoleEnum.HRMeneger)
+    @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal, AccountRoleEnum.HRMeneger, AccountRoleEnum.companyRepresentative)
     @Post('create')
     create(@Body() dto: CreateEducationDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
         return this.educationService.create(dto, jwtPayload.userId, jwtPayload.companyId)
