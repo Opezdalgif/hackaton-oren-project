@@ -57,6 +57,11 @@ export class TestService {
                 company: true,
                 questions: {
                     answer: true
+                },
+                testResultUser: {
+                    questions: {
+                        answer: true
+                    }
                 }
             }
         })
@@ -84,6 +89,11 @@ export class TestService {
                 company: true,
                 questions: {
                     answer: true
+                },
+                testResultUser: {
+                    questions: {
+                        answer: true
+                    }
                 }
             }
         })
@@ -103,6 +113,11 @@ export class TestService {
                     company: true,
                     questions: {
                         answer: true
+                    },
+                    testResultUser: {
+                        questions :{
+                            answer: true
+                        }
                     }
                 }
             })
@@ -128,6 +143,11 @@ export class TestService {
                 company: true,
                 questions: {
                     answer: true
+                },
+                testResultUser: {
+                    questions :{
+                        answer: true
+                    }
                 }
             }
         })
