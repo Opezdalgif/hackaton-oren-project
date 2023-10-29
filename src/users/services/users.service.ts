@@ -46,13 +46,13 @@ export class UsersService {
         
 
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
-        const {bithDate, ...data} = dto
-        // console.log(bithDate);
-        const date = new Date(bithDate).toISOString()
+        // const {bithDate, ...data} = dto
+        // // console.log(bithDate);
+        // const date = new Date(bithDate).toISOString()
         // console.log(date);
 
         const user = await this.usersRepository.create({
-            ...data, 
+            ...dto, 
             passwordHash: passwordHash,
         })
         
@@ -69,10 +69,10 @@ export class UsersService {
 
     async createUserByRepresentative(dto: CreateUserDto, companyId: number) {
         const passwordHash = await bcrypt.hash(dto.passwordHash, 5)
-        const {bithDate, ...data} = dto
-        const date = new Date(bithDate).toISOString()
+        // const {bithDate, ...data} = dto
+        // const date = new Date(bithDate).toISOString()
         const user = await this.usersRepository.create({
-            ...data, 
+            ...dto, 
             passwordHash: passwordHash,
             companyId: companyId,
         })
