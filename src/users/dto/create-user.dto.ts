@@ -1,4 +1,4 @@
-import { IsNotEmpty , IsString , IsEmail , Length, IsNumber, IsPhoneNumber, IsEnum} from "class-validator";
+import { IsNotEmpty , IsString , IsEmail , Length, IsNumber, IsPhoneNumber, IsEnum, IsDate, IsOptional} from "class-validator";
 import { AccountRoleEnum } from "src/common/enums/account-role.enum";
 
 export class CreateUserDto {
@@ -25,4 +25,7 @@ export class CreateUserDto {
 
     @IsEnum(AccountRoleEnum)
     role: AccountRoleEnum
+
+    @IsOptional()
+    bithDate?: Date
 }
