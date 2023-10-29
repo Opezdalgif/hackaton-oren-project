@@ -27,5 +27,5 @@ export class CreateUserDto {
     role: AccountRoleEnum
 
     @IsOptional()
-    bithDate?: Date
+    bithDate?: string
 }
