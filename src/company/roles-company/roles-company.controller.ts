@@ -26,13 +26,13 @@ export class RolesCompanyController {
     }
 
     @Get('find')
-    find(@Query() dto: WhereRolesCompanyDto) {
-        return this.rolesCompanyService.find(dto)
+    find(@Query() dto: WhereRolesCompanyDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
+        return this.rolesCompanyService.find(dto, jwtPayload.companyId)
     }
 
     @Get('findAll')
-    findAll(@Query() dto: WhereRolesCompanyDto) {
-        return this.rolesCompanyService.findAll(dto)
+    findAll(@Query() dto: WhereRolesCompanyDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
+        return this.rolesCompanyService.findAll(dto, jwtPayload.companyId)
     }
 
     @Patch('update/:rolesCompanyId')

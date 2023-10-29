@@ -5,8 +5,5 @@ export class WhereRolesCompanyDto {
     id?: number
 
     @IsOptional()
-    companyId?: number
-
-    @IsOptional()
     nameRole?: string
 }

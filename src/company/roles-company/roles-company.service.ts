@@ -16,7 +16,7 @@ export class RolesCompanyService {
     ) {}
 
     async create (dto: CreateRolesCompanyDto, companyId: number) {
-        const verifyRoleCompany = await this.findCreate({companyId: companyId, nameRole: dto.nameRole}) 
+        const verifyRoleCompany = await this.findCreate({nameRole: dto.nameRole}, companyId) 
         if(verifyRoleCompany) {
             throw new BadRequestException(`Данная профессия уже создана`)
         }
@@ -34,9 +34,12 @@ export class RolesCompanyService {
 
     }
 
-    async findCreate(dto: WhereRolesCompanyDto) {
+    async findCreate(dto: WhereRolesCompanyDto, companyId: number) {
         return await this.rolesCompanyRepository.findOne({
-            where: dto,
+            where: {
+                nameRole: dto.nameRole,
+                companyId: companyId
+            },
             select: {
                 id: true,
                 nameRole: true,
@@ -48,7 +51,7 @@ export class RolesCompanyService {
         })
     }
 
-    async find(dto: WhereRolesCompanyDto) {
+    async find(dto: WhereRolesCompanyDto, companyId?: number) {
 
         const roleCompany = await this.rolesCompanyRepository.findOne({
             where: dto,
@@ -66,16 +69,19 @@ export class RolesCompanyService {
             throw new NotFoundException(`Такой роли не существует или ранее была удалена`)
         }
 
-        if(roleCompany.companyId != dto.companyId) {
+        if(roleCompany.companyId != companyId) {
             throw new ForbiddenException(`У вас нету доступа для просмотра данной информации`)
         }
 
         return roleCompany
     }
 
-    async findAll(dto: WhereRolesCompanyDto) {
+    async findAll(dto: WhereRolesCompanyDto, companyId: number) {
         return this.rolesCompanyRepository.find({
-            where: dto,
+            where: {
+                ...dto,
+                companyId: companyId
+            },
             select: {
                 id: true,
                 nameRole: true
