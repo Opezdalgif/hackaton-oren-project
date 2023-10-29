@@ -199,6 +199,7 @@ export class UsersService {
             if (dto.icon) {
                 const uploadedImage = await this.filesServices.uploadFileBase64(
                     dto.icon,
+                    undefined,
                     'photo',
                 );
                 

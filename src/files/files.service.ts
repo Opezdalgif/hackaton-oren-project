@@ -19,7 +19,8 @@ export class FilesService {
         photo: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
         audio: ['wav', 'mp3'],
         video: ['mp4'], 
-        document: ['vnd.openxmlformats-officedocument.wordprocessingml.document', 'pdf', 'vnd.ms-excel','vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'data:application/vnd.openxmlformats-officedocument.presentationml.presentation','pptm','data:application/vnd.ms-powerpoint', 'msword'],
+        document: ['doc', 'docx' , 'ppt', 'pptx', 'xls', 'xlsx'],
+        //document: ['vnd.openxmlformats-officedocument.wordprocessingml.document', 'pdf', 'vnd.ms-excel','vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'vnd.openxmlformats-officedocument.presentationml.presentation','pptm','vnd.ms-powerpoint', 'msword'],
     };
 
     constructor(private readonly configService: ConfigService) {
@@ -32,9 +33,29 @@ export class FilesService {
         }
     }
 
-    uploadFileBase64(encodedFile: string, ...allowedTypes: string[]) {
+    switchCaseType(extension: string) {
+        switch(extension) {
+            case 'vnd.openxmlformats-officedocument.wordprocessingml.document':
+                return 'docx'
+            case 'vnd.ms-excel':
+                return 'xls'
+            case 'vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+                return 'xlsx'
+            case 'vnd.openxmlformats-officedocument.presentationml.presentatio':
+                return 'pptx'   
+            case 'vnd.ms-powerpoint': 
+                return 'ppt'
+            case 'msword':
+                return 'doc'
+        }
+    }
+
+    uploadFileBase64(encodedFile: string, isDocument?: boolean, nameFile?: string,...allowedTypes: string[]) {
         const data = encodedFile.split(';base64,');
-        const extension = data[0].split('/').pop();
+        let extension = data[0].split('/').pop();
+        if(this.switchCaseType(extension)) {
+            extension =  this.switchCaseType(extension)
+        }
 
         const fileType = this.verifyFileExtension(extension);
 
@@ -49,8 +70,13 @@ export class FilesService {
             this.logger.error(e);
             throw new FileIncorrectFormatException();
         }
-
-        const fileName: string = this.generateName(extension);
+    
+        let fileName: string
+        if(!isDocument) {
+            fileName = this.generateName(extension);
+        } else {
+            fileName = nameFile
+        }
         const publicPath: string = join(this.publicDirectory, fileName);
         const locallyPath: string = join(this.locallyDirectory, fileName);
 

@@ -29,6 +29,7 @@ export class CompanyService {
         }
         const icon = await this.filesService.uploadFileBase64(
             dto.icon,
+            undefined,
             'photo'
         )
 
@@ -93,6 +94,7 @@ export class CompanyService {
 
             const uploadedImage = await this.filesService.uploadFileBase64(
                 dto.icon,
+                undefined,
                 'photo',
             );
 

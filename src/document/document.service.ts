@@ -19,7 +19,7 @@ export class DocumentService {
         
         console.log(dto.documents.length)
         for(let i = 0; i < dto.documents.length; i++ ) {
-            const documentPath = await this.filesService.uploadFileBase64(dto.documents[i].documentBase64, 'document')
+            const documentPath = await this.filesService.uploadFileBase64(dto.documents[i].documentBase64, true, dto.documents[i].name,'document')
             console.log(documentPath.publicPath)
             const document = await this.documentRepository.create({
                 name: dto.documents[i].name,
