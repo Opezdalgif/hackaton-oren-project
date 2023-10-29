@@ -10,6 +10,7 @@ import { FilesModule } from 'src/files/files.module';
     FilesModule
   ],
   providers: [DocumentService],
-  controllers: [DocumentController]
+  controllers: [DocumentController],
+  exports: [DocumentService]
 })
 export class DocumentModule {}

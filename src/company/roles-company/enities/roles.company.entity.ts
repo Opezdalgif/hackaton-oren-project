@@ -1,4 +1,5 @@
 import { CompanyEntity } from "src/company/entities/company.entity";
+import { EducationEntity } from "src/education/enities/education.entity";
 import { TestEntity } from "src/test/enities/test.entity";
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
@@ -18,4 +19,7 @@ export class RolesCompanyEntity extends BaseEntity {
 
     @OneToMany(() => TestEntity, (test) => test.roleCompany, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
     test: TestEntity[]
+
+    @OneToMany(() => EducationEntity, (education) => education.roleCompany, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
+    education: EducationEntity[]
 }

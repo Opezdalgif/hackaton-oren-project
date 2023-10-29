@@ -1,7 +1,8 @@
 import { CompanyEntity } from "src/company/entities/company.entity";
+import { RolesCompanyEntity } from "src/company/roles-company/enities/roles.company.entity";
 import { DocumentEntity } from "src/document/enities/document.entity";
 import { UsersEntity } from "src/users/enities/users.enities";
-import { BaseEntity, Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'education'})
 export class EducationEntity extends BaseEntity {
@@ -26,4 +27,10 @@ export class EducationEntity extends BaseEntity {
 
     @OneToMany(() => DocumentEntity, (document) => document.education)
     documents: DocumentEntity[]
+
+    @Column({nullable: false})
+    roleCompanyId: number
+    @ManyToOne(() => RolesCompanyEntity, (rolesCompany) => rolesCompany.test)
+    @JoinColumn({name: 'roleCompanyId'})
+    roleCompany: RolesCompanyEntity
 }

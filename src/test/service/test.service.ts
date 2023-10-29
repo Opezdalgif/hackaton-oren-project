@@ -107,25 +107,26 @@ export class TestService {
             }
         })
 
-        let arrayTestResult = []
-        let arrayTest = []
-        test.map(test => {
-            test.testResultUser.map(testResult => {
-                if(testResult.userId == userId) {
-                    arrayTestResult.push(testResult)           
-                }
-            })
-        })
+        // let arrayTestResult = []
+        // let arrayTest = []
+        // test.map(test => {
+        //     test.testResultUser.map(testResult => {
+        //         if(testResult.userId == userId) {
+        //             return test
+        //         }
 
-        test.map(test => {
-            if(arrayTestResult.length > 0) {
-                test.testResultUser = arrayTestResult
-                arrayTest.push(test)
-            }
-            
-        })
+        //     })
+        // })
 
-        return arrayTest
+        // test.map(test => {
+        //     if(arrayTestResult.length > 0) {
+        //         return test.testResultUser = arrayTestResult
+        //     } else {
+        //         null
+        //     }
+        // })
+
+        return test
     }
 
     async HomeRoleFind(testId: number, companyId: number, userId?: number) {
@@ -133,9 +134,9 @@ export class TestService {
                 where: {
                     id: testId,
                     companyId: companyId,
-                    testResultUser: {
-                        userId: userId ? userId : undefined
-                    }
+                    // testResultUser: {
+                    //     userId: userId ? userId : undefined
+                    // }
                 },
                 select: {
                     id: true,
@@ -147,6 +148,7 @@ export class TestService {
                         answer: true
                     },
                     testResultUser: {
+                        user: true,
                         questions :{
                             answer: true
                         }

@@ -4,6 +4,7 @@ import { EducationEntity } from './enities/education.entity';
 import { Repository } from 'typeorm';
 import { CreateEducationDto } from './enities/dto/create-education.dto';
 import { UpdateEdicationDto } from './enities/dto/update-education.dto';
+import { DocumentService } from 'src/document/document.service';
 
 @Injectable()
 export class EducationService {
@@ -11,7 +12,8 @@ export class EducationService {
 
     constructor(
         @InjectRepository(EducationEntity)
-        private readonly educationRepository: Repository<EducationEntity>
+        private readonly educationRepository: Repository<EducationEntity>,
+        private readonly documentService: DocumentService
     ){}
 
     async create(dto: CreateEducationDto, userId: number, companyId: number) {
@@ -24,15 +26,19 @@ export class EducationService {
 
         try {
             await education.save()
+            await this.documentService.create({documents: dto.documents}, education.id)
         } catch(e) {
             this.logger.error(e)
             throw new BadRequestException(`Произошла ошибка в создании учебного материала`)
         }
     }
 
-    async find(educationId: number) {
+    async find(educationId: number, companyId?: number) {
         const education = await this.educationRepository.findOne({
-            where: {id: educationId},
+            where: {
+                id: educationId,
+                companyId: companyId
+            },
             relations: {
                  user: true,
                  company: true,
@@ -58,7 +64,7 @@ export class EducationService {
     }
 
     async update(dto: UpdateEdicationDto, educationId: number) {
-        const education = await this.find(educationId)
+        const education = await this.find(educationId, )
 
         for(let key in dto) {
             education[key] = dto[key]
