@@ -33,11 +33,14 @@ export class EducationService {
         }
     }
 
-    async find(educationId: number, companyId?: number) {
+    async find(educationId: number, companyId?: number, roleCompany?: string) {
         const education = await this.educationRepository.findOne({
             where: {
                 id: educationId,
-                companyId: companyId
+                companyId: companyId, 
+                roleCompany: {
+                    nameRole: roleCompany
+                }
             },
             relations: {
                  user: true,
@@ -53,8 +56,14 @@ export class EducationService {
         return education
     }
 
-    async findAll(companyId: number) {
+    async findAll(companyId: number, roleCompany: string) {
         return this.educationRepository.find({
+            where: {
+                companyId: companyId,
+                roleCompany: {
+                    nameRole: roleCompany
+                }
+            },
             relations: {
                 user: true,
                 company: true,

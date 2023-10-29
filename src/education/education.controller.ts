@@ -20,12 +20,12 @@ export class EducationController {
     }
 
     @Get('find/:educationId')
-    find(@Param('educationId') educationId: number) {
-        return this.educationService.find(educationId)
+    find(@Param('educationId') educationId: number, @JwtPayloadParam() jwtPayload: JwtPayload) {
+        return this.educationService.find(educationId, jwtPayload.companyId, jwtPayload.roleCompany)
     }
 
     @Get('findAll')
     findAll(@JwtPayloadParam() jwtPayload: JwtPayload) {
-        return this.educationService.findAll(jwtPayload.companyId)
+        return this.educationService.findAll(jwtPayload.companyId,jwtPayload.roleCompany)
     }
 }
