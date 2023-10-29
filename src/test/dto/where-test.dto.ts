@@ -5,9 +5,6 @@ export class WhereTestDto {
     id?: number
 
     @IsNumber()
-    testId?: number
-
-    @IsNumber()
     companyId?: number
 
     @IsOptional()
