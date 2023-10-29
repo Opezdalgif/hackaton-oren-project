@@ -11,6 +11,9 @@ import { TestModule } from './test/test.module';
 import { OccupationModule } from './occupation/occupation.module';
 import { EducationModule } from './education/education.module';
 import { DocumentModule } from './document/document.module';
+import { ChatModule } from './chat/chat.module';
+import { ChatEntity } from './chat/entities/chat.entity';
+import { ChatMessageEntity } from './chat/entities/chat-message.entity';
 
 
 @Module({
@@ -25,7 +28,9 @@ import { DocumentModule } from './document/document.module';
       autoLoadEntities: true,
       entities: [
         UsersEntity,
-        SessionEntity
+        SessionEntity,
+        ChatEntity,
+        ChatMessageEntity
       ],
       synchronize: true,
        
@@ -33,6 +38,7 @@ import { DocumentModule } from './document/document.module';
     }),
     FilesModule,
     UsersModule,
+    ChatModule,
     AuthModule,
     CompanyModule,
     TestModule,

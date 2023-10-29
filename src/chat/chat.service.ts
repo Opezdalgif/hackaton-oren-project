@@ -50,8 +50,12 @@ export class ChatsService {
         }
     }
 
-    async create(dto: ChatCreateDto, sender: JwtPayload | number) {
-        let chat = await this.chatRepository.create(dto);
+    async create(dto: ChatCreateDto, sender: JwtPayload) {
+        let chat = await this.chatRepository.create({
+            senderId: sender.userId,
+            memberId: dto.memberId,
+            isClosed: false
+        });
     
         try {
             await chat.save();

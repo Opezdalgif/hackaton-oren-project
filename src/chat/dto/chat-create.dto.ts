@@ -11,10 +11,6 @@ export class ChatCreateDto {
     readonly senderId?: number
 
     @IsOptional()
-    @IsNumber()
-    readonly likeId?: number
-
-    @IsOptional()
     readonly isClosed?: boolean
 
 }

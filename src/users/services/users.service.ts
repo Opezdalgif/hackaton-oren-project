@@ -91,7 +91,8 @@ export class UsersService {
                 phoneNumber: true,
                 role: true,
                 companyId: true,
-                icon: true
+                icon: true,
+                roleCompany: true
             },
             relations: {
                 company: true
@@ -190,16 +191,20 @@ export class UsersService {
         try{
             const user = await this.getExists({id: jwtPayload.userId})
 
-            const uploadedImage = await this.filesServices.uploadFileBase64(
-                dto.icon,
-                'photo',
-            );
-
+            
             for(let key in dto) {
                 user[key] = dto[key]
             }
             
-            user.icon = uploadedImage.publicPath
+            if (dto.icon) {
+                const uploadedImage = await this.filesServices.uploadFileBase64(
+                    dto.icon,
+                    'photo',
+                );
+                
+                user.icon = uploadedImage.publicPath
+            }
+
             await user.save()
             return user
         } catch(e) {

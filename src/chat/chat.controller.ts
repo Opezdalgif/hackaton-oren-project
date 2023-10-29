@@ -1,10 +1,12 @@
 import {
+    Body,
     Controller,
     Get,
     HttpCode,
     HttpStatus,
     Param,
     ParseIntPipe,
+    Post,
     Query,
     UseGuards,
     UsePipes,
@@ -17,6 +19,7 @@ import { ChatFindDto } from './dto/chat-find.dto';
 import { AccountRoleEnum } from 'src/common/enums/account-role.enum';
 import { JwtPayload } from 'src/common/types/JwtPayload.types';
 import { ValidationPipe } from 'src/common/pipes/validation.pipe';
+import { ChatCreateDto } from './dto/chat-create.dto';
 
 @Controller('chat')
 @UsePipes(ValidationPipe)
@@ -35,5 +38,10 @@ export class ChatController {
         @Param('id', ParseIntPipe) chatId: number
     ){
         return this.chatsService.findOne({id: chatId})
+    }
+
+    @Post('/create')
+    create(@Body() dto: ChatCreateDto, @JwtPayloadParam() sender: JwtPayload){
+        return this.chatsService.create(dto, sender)
     }
 }

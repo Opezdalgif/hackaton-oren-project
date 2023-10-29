@@ -5,6 +5,8 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import * as bodyParser from 'body-parser'
 import { ConfigService } from '@nestjs/config';
+import { AuthService } from './auth/auth.service';
+import { GatewayAdapter } from './chat/gateways/chat.gateway.adapter';
 
 
 async function bootstrap() {
@@ -18,6 +20,10 @@ async function bootstrap() {
   const publicDirectory = configService.get('PUBLIC_DIRECTORY')
   const locallyDirectory = join(__dirname, publicDirectory);
   app.useStaticAssets(locallyDirectory, { prefix: publicDirectory });
+
+  const authSessionsService = app.get(AuthService);
+  const gatewayAdapter = new GatewayAdapter(app, authSessionsService);
+  app.useWebSocketAdapter(gatewayAdapter);
 
   const PORT = process.env.WEBSERVER_PORT || 6000;
   await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

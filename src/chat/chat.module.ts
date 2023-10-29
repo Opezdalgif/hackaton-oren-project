@@ -20,12 +20,9 @@ import { NotificationModule } from 'src/notification/notification.module';
     ChatsService, 
     ChatMessageService, 
     GatewaySessionManagerService, 
-    MessagesGateway, 
-    NotificationService, 
-    PushNotificationService],
+    MessagesGateway],
   imports: [
-    TypeOrmModule.forFeature([ChatEntity, ChatMessageEntity, NotificationEntity]), 
-    NotificationModule, 
+    TypeOrmModule.forFeature([ChatEntity, ChatMessageEntity]), 
     EventEmitterModule.forRoot()],
   exports: [ChatsService, ChatMessageService, GatewaySessionManagerService, MessagesGateway],
 })

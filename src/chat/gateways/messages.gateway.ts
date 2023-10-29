@@ -53,8 +53,6 @@ export class MessagesGateway
         private readonly chatMessageService: ChatMessageService,
         @Inject(forwardRef(() => ChatsService))
         private readonly chatService: ChatsService,
-        @Inject(forwardRef(() => NotificationService))
-        private readonly notificationsService: NotificationService,
     ) {}
 
     /**
@@ -65,10 +63,6 @@ export class MessagesGateway
         this.logger.log(`Client ${socket.user.firstName} connected!`);
         this.gatewaySessionManagerService.registerClient(socket);
         socket.emit(EChatGatewayEvents.ClientConnected, 'success');
-
-        socket.on(EChatGatewayEvents.GetSelfChats, async () => {
-            await this.chatService.getSelf(socket.user.id)
-        })
     }
 
     /**
@@ -76,7 +70,7 @@ export class MessagesGateway
      * @param socket
      */
     async handleDisconnect(socket: IAuthorizedSocket) {
-        this.logger.log(`Client ${socket.user.firstName} disconnected!`);
+        this.logger.log(`Client disconnected!`);
         this.gatewaySessionManagerService.logoutClient(socket);
         socket.emit(EChatGatewayEvents.ClientDisconnected, 'success')
     }
@@ -140,13 +134,5 @@ export class MessagesGateway
     ) {
         const chats = await this.chatService.getSelf(socket.user.id)
         socket.emit(EChatGatewayEvents.ReturnSelfChats, chats)
-    }
-
-    @SubscribeMessage(EChatGatewayEvents.GetSelNotifications)
-    async handleGetSelfNotifications(
-        @ConnectedSocket() soket: IAuthorizedSocket
-    ) {
-        const notifications = await this.notificationsService.getAllSelf(soket.user.id)
-        soket.emit(EChatGatewayEvents.ReturnSelfNotifications, notifications)
     }
 }
