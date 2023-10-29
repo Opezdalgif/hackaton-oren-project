@@ -12,6 +12,9 @@ export class AnswerEntity extends BaseEntity {
     @Column({nullable: false})
     isCorrect: boolean
 
+    @Column({nullable: true})
+    select: boolean | null
+
     @Column({nullable: false})
     questionId: number
     @ManyToOne(() => QuestionsEntity, (question) => question.answer,{onDelete:'CASCADE', onUpdate:'CASCADE'})
