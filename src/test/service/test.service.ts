@@ -70,14 +70,14 @@ export class TestService {
             throw new NotFoundException(`Данный тест не найден или ранее был удален`)
         }
 
-        let array = []
-        test.testResultUser.map(test =>  {
+        let result
+        test.testResultUser.forEach(test =>  {
             if(test.userId == userId) {
-                array.push(test)            
+                result = test
             }
         })
         
-        test.testResultUser = array
+        test.testResultUser = result
 
         return test
     }
@@ -107,24 +107,19 @@ export class TestService {
             }
         })
 
-        // let arrayTestResult = []
-        // let arrayTest = []
-        // test.map(test => {
-        //     test.testResultUser.map(testResult => {
-        //         if(testResult.userId == userId) {
-        //             return test
-        //         }
+        test.forEach(test => {
+            let result;
+            test.testResultUser.forEach(testResult => {
+                if(testResult.userId == userId) {
+                    console.log(test)
+                    result = testResult
+                }
+            })
+            test.testResultUser = result
+        
+            return test
+        })
 
-        //     })
-        // })
-
-        // test.map(test => {
-        //     if(arrayTestResult.length > 0) {
-        //         return test.testResultUser = arrayTestResult
-        //     } else {
-        //         null
-        //     }
-        // })
 
         return test
     }
