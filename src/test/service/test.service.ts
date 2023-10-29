@@ -40,9 +40,15 @@ export class TestService {
         }
     }
 
-    async find(dto: WhereTestDto) {
+    async find(testId: number, companyId: number, roleCompany: string) {
         const test = await this.testRepository.findOne({
-            where: dto,
+            where: {
+                id: testId,
+                companyId: companyId,
+                roleCompany : {
+                    nameRole: roleCompany
+                }
+            },
             select: {
                 id: true,
                 name: true,
@@ -62,9 +68,14 @@ export class TestService {
         return test
     }
 
-    async findAll(dto: WhereTestDto) {
+    async findAll(companyId: number, rolesCompany: string) {
         return this.testRepository.find({
-            where: dto,
+            where: {
+                companyId: companyId,
+                roleCompany: {
+                    nameRole: rolesCompany
+                }
+            },
             select: {
                 id: true,
                 name: true,
@@ -78,9 +89,53 @@ export class TestService {
         })
     }
 
-    async update(testId: number, dto: UpdateTestDto) {
+    async HomeRoleFind(testId: number, companyId: number) {
+            const test = await this.testRepository.findOne({
+                where: {
+                    id: testId,
+                    companyId: companyId,
+                },
+                select: {
+                    id: true,
+                    name: true,
+                },
+                relations: {
+                    company: true,
+                    questions: {
+                        answer: true
+                    }
+                }
+            })
+    
+            if(!test) {
+                throw new NotFoundException(`Данный тест не найден или ранее был удален`)
+            }
+    
+            return test
+        
+    }
+
+    async homeRoleFindAll( companyId: number) {
+        return this.testRepository.find({
+            where: {
+                companyId: companyId,
+            },
+            select: {
+                id: true,
+                name: true,
+            },
+            relations: {
+                company: true,
+                questions: {
+                    answer: true
+                }
+            }
+        })
+    }
+
+    async update(testId: number, dto: UpdateTestDto, companyId: number, rolesCompany: string) {
         try {
-            const test = await this.find({id: testId})
+            const test = await this.find(testId, companyId, rolesCompany)
 
             for(let key in dto) {
                 test[key] = dto[key]
@@ -94,8 +149,8 @@ export class TestService {
         }
     }
 
-    async remove (testId: number) {
-        const test = await this.find({id: testId})
+    async remove (testId: number, companyId: number, rolesCompany: string) {
+        const test = await this.find(testId,companyId, rolesCompany)
 
         try {
             await test.remove()

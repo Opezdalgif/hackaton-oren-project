@@ -16,7 +16,7 @@ export class RolesCompanyService {
     ) {}
 
     async create (dto: CreateRolesCompanyDto, companyId: number) {
-        const verifyRoleCompany = await this.find({companyId: companyId, nameRole: dto.nameRole}) 
+        const verifyRoleCompany = await this.findCreate({companyId: companyId, nameRole: dto.nameRole}) 
         if(verifyRoleCompany) {
             throw new BadRequestException(`Данная профессия уже создана`)
         }
@@ -32,6 +32,20 @@ export class RolesCompanyService {
             throw new BadRequestException(`Ошибка в создании роли организации`)
         }
 
+    }
+
+    async findCreate(dto: WhereRolesCompanyDto) {
+        return await this.rolesCompanyRepository.findOne({
+            where: dto,
+            select: {
+                id: true,
+                nameRole: true,
+                companyId: true
+            },
+            relations: {
+                company: true
+            }
+        })
     }
 
     async find(dto: WhereRolesCompanyDto) {

@@ -16,6 +16,6 @@ export class RolesCompanyEntity extends BaseEntity {
     @JoinColumn({name: 'companyId'})
     company: CompanyEntity
 
-    @OneToMany(() => TestEntity, (test) => test.roleCompany)
+    @OneToMany(() => TestEntity, (test) => test.roleCompany, {onDelete: 'CASCADE', onUpdate: 'CASCADE'})
     test: TestEntity[]
 }
