@@ -124,14 +124,44 @@ export class TestService {
         return test
     }
 
+    async findUserResultTestHomeRole(testId: number, companyId: number, userId: number) {
+        const test = await this.testRepository.findOne({
+            where: {
+                id: testId,
+                companyId: companyId,
+                testResultUser: {
+                    userId: userId
+                }
+            }, 
+            select: {
+                id: true,
+                name: true
+            },
+            relations: {
+                company: true,
+                questions: {
+                    answer: true
+                },
+                testResultUser: {
+                    questions: {
+                        answer: true
+                    }
+                }
+            }
+        })
+
+        if(!test) {
+            throw new NotFoundException(`Такого пройденного теста у пользователя нету`)
+        }
+
+        return
+    }
+
     async HomeRoleFind(testId: number, companyId: number, userId?: number) {
             const test = await this.testRepository.findOne({
                 where: {
                     id: testId,
                     companyId: companyId,
-                    // testResultUser: {
-                    //     userId: userId ? userId : undefined
-                    // }
                 },
                 select: {
                     id: true,
