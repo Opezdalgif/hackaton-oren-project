@@ -271,9 +271,9 @@ export class UsersService {
         }
     }
 
-    async addRoleCompany(userId: number, rolesCompanyId: number) {
+    async addRoleCompany(userId: number, rolesCompanyId: number, companyId: number) {
         const user = await this.getExists({id: userId})
-        const rolesCompany = await this.rolesCompanyService.find({id: rolesCompanyId})
+        const rolesCompany = await this.rolesCompanyService.find({id: rolesCompanyId}, companyId)
 
         user.roleCompany = rolesCompany.nameRole
 
@@ -319,7 +319,7 @@ export class UsersService {
         if(role === AccountRoleEnum.User) {
             userRole = AccountRoleEnum.User
         }
-        
+
         const user = await this.getExists({id: userId})
 
         user.role = userRole;

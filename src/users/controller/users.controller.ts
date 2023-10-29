@@ -72,8 +72,8 @@ export class UsersController {
 
     @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal ,AccountRoleEnum.companyRepresentative ,AccountRoleEnum.HRMeneger)
     @Post('addRoleCompany')
-    addRoleCompany(@Body() dto: AddRoleCompanyDto) {
-        return this.userService.addRoleCompany(dto.userId, dto.rolesCompanyId)
+    addRoleCompany(@Body() dto: AddRoleCompanyDto, @JwtPayloadParam() jwtPayload: JwtPayload) {
+        return this.userService.addRoleCompany(dto.userId, dto.rolesCompanyId, jwtPayload.companyId)
     }
 
     @Roles(AccountRoleEnum.Admin, AccountRoleEnum.AdminPortal ,AccountRoleEnum.companyRepresentative ,AccountRoleEnum.HRMeneger)
