@@ -303,22 +303,33 @@ export class UsersService {
 
     async addRole(userId: number, role: AccountRoleEnum) {
 
+        let userRole
         if(role === AccountRoleEnum.Admin) {
             throw new ForbiddenException(`У вас нету доступа`)
         }
+
+        if(role === AccountRoleEnum.HRMeneger) {
+            userRole = AccountRoleEnum.HRMeneger
+        }
+
+        if(role === AccountRoleEnum.AdminPortal) {
+            userRole = AccountRoleEnum.AdminPortal
+        }
+
+        if(role === AccountRoleEnum.User) {
+            userRole = AccountRoleEnum.User
+        }
+        
         const user = await this.getExists({id: userId})
 
-        if (AccountRoleEnum[role] !== undefined) {
-            user.role = role;
+        user.role = userRole;
     
-            try {
-                await user.save();
-            } catch (e) {
-                this.logger.error(e);
-                throw new BadRequestException(`Ошибка в добавление главной роли пользователю`);
-            }
-        } else {
-            throw new BadRequestException(`Недопустимая роль пользователя`);
+        try {
+            await user.save();
+        } catch (e) {
+            this.logger.error(e);
+            throw new BadRequestException(`Ошибка в добавление главной роли пользователю`);
         }
+        
     }
 }

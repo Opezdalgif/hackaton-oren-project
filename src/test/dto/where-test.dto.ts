@@ -1,10 +1,10 @@
 import { IsNumber, IsOptional } from "class-validator";
 
 export class WhereTestDto {
-    @IsNumber()
+    @IsOptional()
     id?: number
-
-    @IsNumber()
+    
+    @IsOptional()
     companyId?: number
 
     @IsOptional()
