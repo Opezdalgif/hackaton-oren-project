@@ -24,9 +24,6 @@ export class UsersEntity extends BaseEntity {
     @Column({nullable:false})
     email: string
 
-    @Column({nullable: true})
-    birthDate: Date | null;
-
     @Column({nullable: false})
     passwordHash: string;
 
