@@ -15,9 +15,12 @@ export class DocumentService {
         private readonly filesService: FilesService
     ){}
 
-    async create(dto: CreateDocumentDto, educationId) {
-        for( let i = 0; i < dto.documents.length; i++ ) {
+    async create(dto: CreateDocumentDto, educationId: number) {
+        
+        console.log(dto.documents.length)
+        for(let i = 0; i < dto.documents.length; i++ ) {
             const documentPath = await this.filesService.uploadFileBase64(dto.documents[i].documentBase64, 'document')
+            console.log(documentPath.publicPath)
             const document = await this.documentRepository.create({
                 name: dto.documents[i].name,
                 url: documentPath.publicPath,

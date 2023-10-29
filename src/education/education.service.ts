@@ -21,14 +21,19 @@ export class EducationService {
             name: dto.name,
             description: dto.description,
             userId: userId,
-            companyId: companyId
+            companyId: companyId,
+            roleCompanyId: dto.roleCompanyId
         })
 
         try {
             await education.save()
+            //console.log(dto.documents)
             await this.documentService.create({documents: dto.documents}, education.id)
         } catch(e) {
             this.logger.error(e)
+            if(e instanceof BadRequestException) {
+                throw e
+            }
             throw new BadRequestException(`Произошла ошибка в создании учебного материала`)
         }
     }

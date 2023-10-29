@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsNumber, IsString } from "class-validator";
 import { UploadDocumentDto } from "src/document/dto/upload-document.dto";
 
 export class CreateEducationDto {
@@ -12,4 +12,7 @@ export class CreateEducationDto {
 
     @IsArray()
     documents: UploadDocumentDto[]
+
+    @IsNumber()
+    roleCompanyId: number
 }

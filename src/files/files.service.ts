@@ -18,8 +18,8 @@ export class FilesService {
     private readonly extensions = {
         photo: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
         audio: ['wav', 'mp3'],
-        video: ['mp4'],
-        document: ['doc', 'docx', 'pdf', 'xls', 'xlsm', 'xlsx', 'pptx','pptm','ppt'],
+        video: ['mp4'], 
+        document: ['vnd.openxmlformats-officedocument.wordprocessingml.document', 'pdf', 'vnd.ms-excel','vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'data:application/vnd.openxmlformats-officedocument.presentationml.presentation','pptm','data:application/vnd.ms-powerpoint', 'msword'],
     };
 
     constructor(private readonly configService: ConfigService) {
@@ -94,6 +94,7 @@ export class FilesService {
     }
 
     verifyFileExtension(extension: string | false) {
+        console.log(extension)
         for (let type in this.extensions) {
             if (this.extensions[type].includes(extension)) {
                 return type;
